@@ -1,0 +1,6 @@
+# Add project-specific obfuscation rules here if needed.
+
+-enable-property-obfuscation
+-enable-toplevel-obfuscation
+-enable-filename-obfuscation
+-enable-export-obfuscation

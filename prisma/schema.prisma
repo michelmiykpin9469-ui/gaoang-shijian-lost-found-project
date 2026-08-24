@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  name            String
+  account         String   @unique
+  password        String
+  role            String   @default("user")
+  avatarText      String
+  verification    String   @default("未认证")
+  trustScore      Int      @default(80)
+  publishingCount Int      @default(0)
+  recoveredCount  Int      @default(0)
+  returnedCount   Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  items     Item[]
+  favorites Favorite[]
+  claims    ClaimRequest[]
+  messages  MessageNotice[]
+}
+
+model Item {
+  id                   Int      @id @default(autoincrement())
+  ownerId              Int
+  type                 String
+  status               String
+  title                String
+  category             String
+  source               String
+  location             String
+  distance             String
+  eventTime            String
+  description          String   @db.Text
+  contactName          String
+  contactPhone         String
+  privacyNote          String
+  verificationQuestion String
+  verificationAnswer   String
+  score                Int      @default(90)
+  scoreLabel           String   @default("新发布")
+  iconText             String
+  imageUrl             String   @default("")
+  color                String   @default("#2F6BFF")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  owner     User @relation(fields: [ownerId], references: [id])
+  favorites Favorite[]
+  claims    ClaimRequest[]
+  messages  MessageNotice[]
+}
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  itemId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  item Item @relation(fields: [itemId], references: [id])
+
+  @@unique([userId, itemId])
+}
+
+model ClaimRequest {
+  id         Int      @id @default(autoincrement())
+  itemId     Int
+  claimantId Int
+  answer     String
+  note       String
+  status     String   @default("待审核")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  item     Item @relation(fields: [itemId], references: [id])
+  claimant User @relation(fields: [claimantId], references: [id])
+}
+
+model MessageNotice {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  itemId    Int
+  type      String
+  title     String
+  content   String
+  timeText  String
+  unread    Int      @default(1)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  item Item @relation(fields: [itemId], references: [id])
+}

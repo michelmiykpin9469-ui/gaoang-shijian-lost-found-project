@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "失物招领与寻物启事聚合平台模块"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "拾见入口"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "拾见"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "shijian-lost-found-server",
+  "version": "1.0.0",
+  "description": "拾见失物招领与寻物启事聚合平台后端服务",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --no-warnings --experimental-sqlite index.js",
+    "start": "node --no-warnings --experimental-sqlite index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
